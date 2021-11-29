@@ -53,9 +53,12 @@ function actualizarPalanca(status="Up") {
   }
 }
 
-function actualizarResultados (tirada=false) {
+function actualizarResultados (tirada=false, resultados) {
   if (tirada) {
-    console.log("Tirada")
+    revolverTirada(resultados);
+    resultadoUno.src = imagenes[resultados[0]];
+    resultadoDos.src = imagenes[resultados[1]];
+    resultadoTres.src = imagenes[resultados[2]];
   } else {
     resultadoUno.src = imagenDefault;
     resultadoDos.src = imagenDefault;
@@ -63,26 +66,43 @@ function actualizarResultados (tirada=false) {
   }
 }
 
-// TODO el mouseup se ejecuta multiples veces por que toca matar el listener
-palanca.addEventListener("mousedown", function() {
+function revolverTirada(resultados) {
+  const numeroImagenes = imagenes.length -1;
+  for (let i = 0; i < numeroImagenes * 2; i++) {
+    resultadoUno.src = imagenes[i];
+    resultadoDos.src = imagenes[i + 1];
+    resultadoTres.src = imagenes[i + 2];
+  }
+}
+
+function tirar() {
+  const maximo = imagenes.length - 1;
+  const minimo = 0;
+  const numeroRandomUno = Math.floor(Math.random() * (maximo - minimo + 1) + minimo);
+  const numeroRandomDos = Math.floor(Math.random() * (maximo - minimo + 1) + minimo);
+  const numeroRandomTres = Math.floor(Math.random() * (maximo - minimo + 1) + minimo);
+  const resultados = [numeroRandomUno, numeroRandomDos, numeroRandomTres];
+  actualizarResultados(true, resultados);
+}
+
+const tirada = palanca.addEventListener("mouseup", function() {
+  actualizarPalanca();
   if (monedas > 0) {
-    actualizarPalanca("Down")
-    palanca.addEventListener("mouseup", function() {
-      actualizarPalanca();
-      const maximo = imagenes.length - 1;
-      const minimo = 0;
-      const numeroRandom = Math.floor(Math.random() * (maximo - minimo + 1) + minimo);
-      console.log(numeroRandom)
-    })
+    tirar();
   } else {
     alert("Por favor, introduce monedas.");
   }
+})
+
+palanca.addEventListener("mousedown", function() {
+  actualizarPalanca("Down");
+  tirada;
 });
 
 formulario.addEventListener('submit', function(event) {
   event.preventDefault();
   var input = inputFormulario.value;
   monedas = input;
-  actualizarMonedas()
+  actualizarMonedas();
   inputFormulario.value = "";
 });
