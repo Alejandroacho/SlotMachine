@@ -76,13 +76,18 @@ function revolverTirada(resultados) {
 }
 
 function tirar() {
-  const maximo = imagenes.length - 1;
-  const minimo = 0;
-  const numeroRandomUno = Math.floor(Math.random() * (maximo - minimo + 1) + minimo);
-  const numeroRandomDos = Math.floor(Math.random() * (maximo - minimo + 1) + minimo);
-  const numeroRandomTres = Math.floor(Math.random() * (maximo - minimo + 1) + minimo);
+  const numeroRandomUno = numeroRandom();
+  const numeroRandomDos = numeroRandom();
+  const numeroRandomTres = numeroRandom();
   const resultados = [numeroRandomUno, numeroRandomDos, numeroRandomTres];
   actualizarResultados(true, resultados);
+}
+
+function numeroRandom(){
+  const maximo = imagenes.length - 1;
+  const minimo = 0;
+  const numeroRandom = Math.floor(Math.random() * (maximo - minimo + 1) + minimo);
+  return numeroRandom;
 }
 
 const tirada = palanca.addEventListener("mouseup", function() {
