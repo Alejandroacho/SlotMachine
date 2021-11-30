@@ -55,7 +55,6 @@ function actualizarPalanca(status="Up") {
 
 function actualizarResultados (tirada=false, resultados) {
   if (tirada) {
-    revolverTirada(resultados);
     resultadoUno.src = imagenes[resultados[0]];
     resultadoDos.src = imagenes[resultados[1]];
     resultadoTres.src = imagenes[resultados[2]];
@@ -66,16 +65,9 @@ function actualizarResultados (tirada=false, resultados) {
   }
 }
 
-function revolverTirada(resultados) {
-  const numeroImagenes = imagenes.length -1;
-  for (let i = 0; i < numeroImagenes * 2; i++) {
-    resultadoUno.src = imagenes[i];
-    resultadoDos.src = imagenes[i + 1];
-    resultadoTres.src = imagenes[i + 2];
-  }
-}
-
 function tirar() {
+  monedas--;
+  actualizarMonedas();
   const numeroRandomUno = numeroRandom();
   const numeroRandomDos = numeroRandom();
   const numeroRandomTres = numeroRandom();
