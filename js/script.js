@@ -74,6 +74,7 @@ function actualizarResultados (tirada=false, resultados) {
     resultadoUno.src = "../img/" + listaImagenes[resultados[0]] + ".png";
     resultadoDos.src = "../img/" + listaImagenes[resultados[1]] + ".png";
     resultadoTres.src = "../img/" + listaImagenes[resultados[2]] + ".png";
+    calcularGanancia(resultados);
   } else {
     resultadoUno.src = imagenDefault;
     resultadoDos.src = imagenDefault;
@@ -96,6 +97,72 @@ function numeroRandom(){
   const minimo = 0;
   const numeroRandom = Math.floor(Math.random() * (maximo - minimo + 1) + minimo);
   return numeroRandom;
+}
+
+function calcularGanancia(resultados){
+  const resultadoUno = resultados[0];
+  const resultadoDos = resultados[1];
+  const resultadoTres = resultados[2];
+  const repeticiones = obtenerRepeticiones(resultadoUno, resultadoDos, resultadoTres);
+  const iguales = repeticiones[0];
+  const triple = repeticiones[1];
+  const dolares = obtenerDolares(resultadoUno, resultadoDos, resultadoTres);
+  const ganancia = obtenerGanancias(iguales, triple, dolares);
+  console.log(monedas);
+  monedas = monedas + ganancia;
+  console.log(ganancia);
+  actualizarMonedas();
+  return ganancia;
+}
+
+function obtenerRepeticiones(resultadoUno, resultadoDos, resultadoTres){
+  var iguales = false;
+  var triple = false;
+  if (resultadoUno == resultadoDos) {
+    iguales = true;
+    if (resultadoUno == resultadoTres) {
+      triple = true;
+    }
+  }
+  if (resultadoUno == resultadoTres) {
+    iguales = true;
+  }
+  if (resultadoDos == resultadoTres) {
+    iguales = true;
+  }
+  return [iguales, triple];
+}
+
+function obtenerDolares(resultadoUno, resultadoDos, resultadoTres){
+  var dolares = 0;
+  if(resultadoUno == posicionDeDollar){
+    dolares++;
+  }
+  if(resultadoDos == posicionDeDollar){
+    dolares++;
+  }
+  if(resultadoTres == posicionDeDollar){
+    dolares++;
+  }
+  return dolares;
+}
+
+function obtenerGanancias(dolares, iguales, triple){
+  var ganancia = 0;
+  if (dolares == 1){
+    ganancia = 1;
+  } else if (dolares == 2) {
+    ganancia = 4;
+  } else if (dolares == 3) {
+    ganancia = 10;
+  }
+  if (iguales) {
+    ganancia = ganancia + 2;
+  }
+  if (triple && dolares == 0) {
+    ganancia = 3;
+  }
+  return ganancia;
 }
 
 function registrarMovimiento(concepto){
