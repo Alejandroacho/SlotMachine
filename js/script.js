@@ -1,6 +1,8 @@
 // Elementos del DOM
 const monedasDiv = document.getElementById("monedas")
 const palanca = document.getElementById("palanca")
+const historial = document.getElementById("historialMovimientos");
+const movimientos = document.getElementById("movimientos");
 
 // Elementos del DOM del formulario
 const formulario = document.getElementById("formulario")
@@ -19,17 +21,20 @@ const imagenDefault = "../img/pingu.png"
 
 // Imagenes de posibles resultados
 const imagenes = [
+  "../img/dollar.png",
   "../img/aubergine.png",
   "../img/banana.png",
   "../img/carrots.png",
   "../img/cherries.png",
-  "../img/dollar.png",
   "../img/lemon.png",
   "../img/orange.png",
   "../img/peach.png",
   "../img/potato.png",
   "../img/tomato.png"
 ]
+
+// Posicion de la imagen dollar en el array de imagenes
+const posicionDeDollar = 0;
 
 var monedas = 0;
 
@@ -39,6 +44,7 @@ function init() {
   actualizarMonedas();
   actualizarPalanca();
   actualizarResultados();
+  actualizarMovimientos();
 }
 
 function actualizarMonedas() {
@@ -50,6 +56,14 @@ function actualizarPalanca(status="Up") {
     palanca.src = palancaArriba
   } else {
     palanca.src = palancaAbajo
+  }
+}
+
+function actualizarMovimientos(tirada=false, descripcion) {
+  if (tirada) {
+    console.log("tirada");
+  } else {
+    historialMovimientos.hidden = true;
   }
 }
 
