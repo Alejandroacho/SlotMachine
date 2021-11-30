@@ -1,3 +1,5 @@
+var listaImagenes = ["aubergine", "banana", "carrots", "cherries", "dollar", "lemon", "orange", "peach", "potato", "tomato"];
+
 // Elementos del DOM
 const monedasDiv = document.getElementById("monedas")
 const palanca = document.getElementById("palanca")
@@ -20,21 +22,21 @@ const palancaAbajo = "../img/palancaDOWN.png"
 const imagenDefault = "../img/pingu.png"
 
 // Imagenes de posibles resultados
-const imagenes = [
-  "../img/dollar.png",
-  "../img/aubergine.png",
-  "../img/banana.png",
-  "../img/carrots.png",
-  "../img/cherries.png",
-  "../img/lemon.png",
-  "../img/orange.png",
-  "../img/peach.png",
-  "../img/potato.png",
-  "../img/tomato.png"
-]
+// const imagenes = [
+//   "../img/dollar.png",
+//   "../img/aubergine.png",
+//   "../img/banana.png",
+//   "../img/carrots.png",
+//   "../img/cherries.png",
+//   "../img/lemon.png",
+//   "../img/orange.png",
+//   "../img/peach.png",
+//   "../img/potato.png",
+//   "../img/tomato.png"
+// ]
 
 // Posicion de la imagen dollar en el array de imagenes
-const posicionDeDollar = 0;
+const posicionDeDollar = 4;
 
 var monedas = 0;
 
@@ -69,9 +71,9 @@ function actualizarMovimientos(tirada=false, descripcion) {
 
 function actualizarResultados (tirada=false, resultados) {
   if (tirada) {
-    resultadoUno.src = imagenes[resultados[0]];
-    resultadoDos.src = imagenes[resultados[1]];
-    resultadoTres.src = imagenes[resultados[2]];
+    resultadoUno.src = "../img/" + listaImagenes[resultados[0]] + ".png";
+    resultadoDos.src = "../img/" + listaImagenes[resultados[1]] + ".png";
+    resultadoTres.src = "../img/" + listaImagenes[resultados[2]] + ".png";
   } else {
     resultadoUno.src = imagenDefault;
     resultadoDos.src = imagenDefault;
@@ -90,7 +92,7 @@ function tirar() {
 }
 
 function numeroRandom(){
-  const maximo = imagenes.length - 1;
+  const maximo = listaImagenes.length - 1;
   const minimo = 0;
   const numeroRandom = Math.floor(Math.random() * (maximo - minimo + 1) + minimo);
   return numeroRandom;
