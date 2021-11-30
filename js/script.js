@@ -116,4 +116,5 @@ formulario.addEventListener('submit', function(event) {
   monedas = input;
   actualizarMonedas();
   inputFormulario.value = "";
+  botonIntroducir.disabled = true;
 });
