@@ -96,6 +96,13 @@ function numeroRandom(){
   return numeroRandom;
 }
 
+function registrarMovimiento(concepto){
+  historialMovimientos.hidden = false;
+  const movimiento = document.createElement("li");
+  movimiento.innerText = concepto;
+  movimientos.appendChild(movimiento);
+}
+
 const tirada = palanca.addEventListener("mouseup", function() {
   actualizarPalanca();
   if (monedas > 0) {
@@ -117,4 +124,5 @@ formulario.addEventListener('submit', function(event) {
   actualizarMonedas();
   inputFormulario.value = "";
   botonIntroducir.disabled = true;
+  registrarMovimiento("Has introducido monedas.")
 });
