@@ -21,20 +21,6 @@ const palancaArriba = "../img/palancaUP.png"
 const palancaAbajo = "../img/palancaDOWN.png"
 const imagenDefault = "../img/pingu.png"
 
-// Imagenes de posibles resultados
-// const imagenes = [
-//   "../img/dollar.png",
-//   "../img/aubergine.png",
-//   "../img/banana.png",
-//   "../img/carrots.png",
-//   "../img/cherries.png",
-//   "../img/lemon.png",
-//   "../img/orange.png",
-//   "../img/peach.png",
-//   "../img/potato.png",
-//   "../img/tomato.png"
-// ]
-
 // Posicion de la imagen dollar en el array de imagenes
 const posicionDeDollar = 4;
 
@@ -46,7 +32,7 @@ function init() {
   actualizarMonedas();
   actualizarPalanca();
   actualizarResultados();
-  actualizarMovimientos();
+  historialMovimientos.hidden = true;
 }
 
 function actualizarMonedas() {
@@ -58,14 +44,6 @@ function actualizarPalanca(status="Up") {
     palanca.src = palancaArriba
   } else {
     palanca.src = palancaAbajo
-  }
-}
-
-function actualizarMovimientos(tirada=false, descripcion) {
-  if (tirada) {
-    console.log("tirada");
-  } else {
-    historialMovimientos.hidden = true;
   }
 }
 
