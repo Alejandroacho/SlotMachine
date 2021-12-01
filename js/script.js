@@ -85,6 +85,7 @@ function actualizarResultados (tirada=false, resultados) {
 function tirar() {
   monedas--;
   actualizarMonedas();
+  registrarMovimiento("Gastas una moneda.");
   const numeroRandomUno = numeroRandom();
   const numeroRandomDos = numeroRandom();
   const numeroRandomTres = numeroRandom();
@@ -105,6 +106,7 @@ function calcularGanancia(resultadoUno, resultadoDos, resultadoTres){
   const triple = repeticiones[1];
   const dolares = obtenerNumeroDeDolares(resultadoUno, resultadoDos, resultadoTres);
   const ganancia = obtenerGanancias(dolares, doble, triple);
+  registrarMensaje(dolares, doble, triple);
   monedas = monedas + ganancia;
   actualizarMonedas();
   return ganancia;
@@ -162,9 +164,47 @@ function obtenerGananciasConRepeticiones(dolares, doble, triple){
     ganancia = ganancia + 2;
   }
   if (triple && dolares == 0) {
-    ganancia = 3;
+    ganancia = 5;
   }
   return ganancia;
+}
+
+function registrarMensaje(dolares, doble, triple){
+  const mensaje = obtenerMensaje(dolares, doble, triple);
+  if (mensaje != "") {
+    registrarMovimiento(mensaje);
+  }
+}
+
+function obtenerMensaje(dolares, doble, triple){
+  var mensaje = "";
+  mensaje = obtenerMensajePorDolares(dolares);
+  mensaje = obtenerMensajePorRepeticionesYDolares(mensaje, dolares, doble, triple);
+  return mensaje;
+}
+
+function obtenerMensajePorDolares(dolares){
+  if (dolares == 1){
+    return "¡Una MONEDA! Ganas 1 monedas.";
+  }
+  if (dolares == 2){
+    return "¡Dos MONEDAS! Ganas 4 monedas.";
+  }
+  if (dolares == 3){
+    return "¡Tres MONEDAS! Ganas 10 monedas.";
+  }
+  return "";
+}
+
+function obtenerMensajePorRepeticionesYDolares(mensaje, dolares, doble, triple){
+  if (doble && dolares == 0) {
+    return "¡Dos IGUALES! Ganas 2 monedas.";
+  } else if (doble && dolares == 1) {
+    return "¡Dos IGUALES y una MONEDA! Ganas 3 monedas.";
+  } else if (triple && dolares == 0) {
+    return "¡TRIPLE! Ganas 5 monedas.";
+  }
+  return mensaje;
 }
 
 function registrarMovimiento(concepto){
