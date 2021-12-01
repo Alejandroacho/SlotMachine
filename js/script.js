@@ -74,7 +74,7 @@ function actualizarResultados (tirada=false, resultados) {
     resultadoUno.src = "../img/" + listaImagenes[resultados[0]] + ".png";
     resultadoDos.src = "../img/" + listaImagenes[resultados[1]] + ".png";
     resultadoTres.src = "../img/" + listaImagenes[resultados[2]] + ".png";
-    calcularGanancia(resultados);
+    calcularGanancia(resultados[0], resultados[1], resultados[2]);
   } else {
     resultadoUno.src = imagenDefault;
     resultadoDos.src = imagenDefault;
@@ -99,41 +99,31 @@ function numeroRandom(){
   return numeroRandom;
 }
 
-function calcularGanancia(resultados){
-  const resultadoUno = resultados[0];
-  const resultadoDos = resultados[1];
-  const resultadoTres = resultados[2];
+function calcularGanancia(resultadoUno, resultadoDos, resultadoTres){
   const repeticiones = obtenerRepeticiones(resultadoUno, resultadoDos, resultadoTres);
-  const iguales = repeticiones[0];
+  const doble = repeticiones[0];
   const triple = repeticiones[1];
-  const dolares = obtenerDolares(resultadoUno, resultadoDos, resultadoTres);
-  const ganancia = obtenerGanancias(iguales, triple, dolares);
-  console.log(monedas);
+  const dolares = obtenerNumeroDeDolares(resultadoUno, resultadoDos, resultadoTres);
+  const ganancia = obtenerGanancias(dolares, doble, triple);
   monedas = monedas + ganancia;
-  console.log(ganancia);
   actualizarMonedas();
   return ganancia;
 }
 
 function obtenerRepeticiones(resultadoUno, resultadoDos, resultadoTres){
-  var iguales = false;
+  var doble = false;
   var triple = false;
-  if (resultadoUno == resultadoDos) {
-    iguales = true;
-    if (resultadoUno == resultadoTres) {
-      triple = true;
-    }
+  if (resultadoUno == resultadoDos && resultadoUno == resultadoTres) {
+    triple = true;
+  } else if (resultadoUno == resultadoTres || 
+             resultadoDos == resultadoTres || 
+             resultadoUno == resultadoDos) {
+    doble = true;
   }
-  if (resultadoUno == resultadoTres) {
-    iguales = true;
-  }
-  if (resultadoDos == resultadoTres) {
-    iguales = true;
-  }
-  return [iguales, triple];
+  return [doble, triple];
 }
 
-function obtenerDolares(resultadoUno, resultadoDos, resultadoTres){
+function obtenerNumeroDeDolares(resultadoUno, resultadoDos, resultadoTres){
   var dolares = 0;
   if(resultadoUno == posicionDeDollar){
     dolares++;
@@ -147,7 +137,14 @@ function obtenerDolares(resultadoUno, resultadoDos, resultadoTres){
   return dolares;
 }
 
-function obtenerGanancias(dolares, iguales, triple){
+function obtenerGanancias(dolares, doble, triple){
+  var ganancia = 0;
+  ganancia = ganancia + obtenerGananciasConDolares(dolares);
+  ganancia = ganancia + obtenerGananciasConRepeticiones(dolares, doble, triple);
+  return ganancia;
+}
+
+function obtenerGananciasConDolares(dolares){
   var ganancia = 0;
   if (dolares == 1){
     ganancia = 1;
@@ -156,7 +153,12 @@ function obtenerGanancias(dolares, iguales, triple){
   } else if (dolares == 3) {
     ganancia = 10;
   }
-  if (iguales) {
+  return ganancia;
+}
+
+function obtenerGananciasConRepeticiones(dolares, doble, triple){
+  var ganancia = 0;
+  if (doble && dolares < 2) {
     ganancia = ganancia + 2;
   }
   if (triple && dolares == 0) {
