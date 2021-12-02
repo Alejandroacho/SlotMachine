@@ -10,6 +10,7 @@ const movimientos = document.getElementById("movimientos");
 const formulario = document.getElementById("formulario")
 const botonIntroducir = document.getElementById("botonFormulario")
 const inputFormulario = document.getElementById("inputFormulario")
+const botonSalir = document.getElementById("botonSalir");
 
 // Elementos del DOM donde iran los resultados
 const resultadoUno = document.getElementById("resultadoUno")
@@ -95,8 +96,8 @@ function obtenerRepeticiones(resultadoUno, resultadoDos, resultadoTres){
   var triple = false;
   if (resultadoUno == resultadoDos && resultadoUno == resultadoTres) {
     triple = true;
-  } else if (resultadoUno == resultadoTres || 
-             resultadoDos == resultadoTres || 
+  } else if (resultadoUno == resultadoTres ||
+             resultadoDos == resultadoTres ||
              resultadoUno == resultadoDos) {
     doble = true;
   }
@@ -213,5 +214,15 @@ formulario.addEventListener('submit', function(event) {
   actualizarMonedas();
   inputFormulario.value = "";
   botonIntroducir.disabled = true;
+  inputFormulario.disabled = true;
   registrarMovimiento("Has introducido monedas.")
+});
+
+botonSalir.addEventListener('click', function(event) {
+  inputFormulario.value = monedas;
+  monedas = 0;
+  actualizarMonedas();
+  botonIntroducir.disabled = false;
+  inputFormulario.disabled = false;
+  registrarMovimiento("Sacas todas las monedas.")
 });
